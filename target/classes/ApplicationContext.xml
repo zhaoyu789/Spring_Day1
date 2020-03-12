@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 读取小配置文件-->
+    <context:property-placeholder location="jdbc.properties"></context:property-placeholder>
+    <bean id="user" class="User" scope="prototype">
+        <property name="username" value="1"></property>
+        <property name="password" value="2"></property>
+        <property name="age" value="3"></property>
+        <property name="height" value="4"></property>
+        <property name="ss">
+            <array>
+                <value>嘻嘻</value>
+                <value>哈哈</value>
+                <value>到的</value>
+                <value>康康</value>
+            </array>
+
+        </property>
+        <property name="ll">
+            <list>
+                <value>hahha</value>
+                <value>ssssss</value>
+                <value>dddddd</value>
+                <value>ffffff</value>
+            </list>
+        </property>
+        <property name="ee">
+            <set>
+                <value>dd</value>
+                <value>aa</value>
+                <value>ee</value>
+                <value>gg</value>
+                <value>hh</value>
+            </set>
+        </property>
+        <property name="pp">
+            <map>
+                <entry>
+                    <key><value>username</value></key>
+                    <value>赵宇</value>
+                </entry>
+                <entry>
+                    <key><value>password</value></key>
+                    <value>222222</value>
+                </entry>
+                <entry>
+                    <key><value>age</value></key>
+                    <value>12</value>
+                </entry>
+            </map>
+        </property>
+        <property name="properties">
+            <props>
+                <prop key="username">张死你</prop>
+                <prop key="password">666666666666</prop>
+            </props>
+        </property>
+
+    </bean>
+    <bean id="car" class="com.baizhi.test.entity.Car">
+        <constructor-arg name="carname" value="1"></constructor-arg>
+        <constructor-arg name="carcolor" value="杭瑟"></constructor-arg>
+        <constructor-arg name="price" value="23.34"></constructor-arg>
+    </bean>
+    <!-- UserDao 信息-->
+    <bean id="userDao" class="com.baizhi.test.dao.UserdaoImpl" ></bean>
+    <!-- 配置UserServiceImpl 实现类的 信息-->
+    <bean id="userservice" class="UserServiceImpl" autowire="byName">
+        <!--<property name="userDao" ref="userDao"></property>-->
+    </bean>
+    <!-- 配置SqlSesionFactory 的相关信息-->
+    <bean id="sqlSessionFactory" class="com.baizhi.test.factoryBean.MySqlSessionFactory"></bean>
+    <!-- 配置Order 的配置信息-->
+    <bean id="order" class="com.baizhi.test.entity.Order" scope="prototype" init-method="destory"></bean>
+    <!-- 配置MyConnection 的相关信息-->
+    <bean id="connection"  class="com.baizhi.test.factoryBean.MyConnection">
+        <property name="driveClassName" value="${driver}"></property>
+        <property name="url" value="${url}"></property>
+        <property name="username" value="${name}"></property>
+        <property name="password" value="${password}"></property>
+    </bean>
+    <!-- 配置Book的相关信息-->
+    <bean id="book" class="com.baizhi.test.entity.Book">
+        <property name="bookcolor" value="黄色"></property>
+        <property name="bookname" value="小说"></property>
+        <property name="sishu" value="111111"></property>
+    </bean>
+    <!-- 后置Bean 的信息配置-->
+    <bean id="beanPost" class="com.baizhi.BeanPostProcessor.MyBeanPostProcessor" ></bean>
+</beans>
